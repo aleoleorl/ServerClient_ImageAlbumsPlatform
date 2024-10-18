@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CIT_Album</title>
+	<link rel="stylesheet" href="styles/styles.css?v=1.16">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="srcClient/setting.js?v=1.16"></script>
+    <script src="srcClient/imagePage.js?v=1.16"></script>
+    <script src="srcClient/oneAlbumPage.js?v=1.16"></script>
+    <script src="srcClient/albumsPage.js?v=1.16"></script>
+    <script src="srcClient/auth.js?v=1.16"></script>
+    <script src="srcClient/client.js?v=1.16"></script>
+</head>
+<body>
+    <div id="toppanel">
+        <label id="information">Albums</label>
+        <div id="right-section">
+            <label id="userLabel">Hello, Guest</label>
+            <button id="registerBtn" onclick="onClickRegisterBtn()">Register</button>
+            <button id="loginBtn" onclick="onClickLoginBtn()">Login</button>
+            <button id="signOutBtn" onclick="onClickSignOutBtn()">Sign Out</button>
+        </div>
+    </div>
+    <div id="overlayAlbumList">
+        <div id="albumList" class="albumList" ></div>
+    </div>
+    <div id="overlayLogin" class="overlay1">
+        <div class="form-container">
+            <button class="close-btn" onclick="closeOverlayLogin()">×</button>
+            <h2>Enter your credentials:</h2>
+            <form id="loginForm1">                
+                <table>
+                    <tr>
+                        <td><label for="login">Login:</label></td>
+                        <td><input type="text" id="login" name="login" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password:</label></td>
+                        <td><input type="password" id="password" name="password" required></td>
+                    </tr>
+                </table>
+                <button type="submit">submit</button>
+            </form>
+            <label id="overlayLoginLabel"></label>
+        </div>
+    </div>
+    <div id="overlayRegister" class="overlay2">
+        <div class="form-container">
+            <button class="close-btn" onclick="closeOverlayRegister()">×</button>
+            <h2>Create your profile:</h2>
+            <form id="loginForm2">
+                <table>
+                    <tr>
+                        <td><label for="login2">Login:</label></td>
+                        <td><input type="text" id="login2" name="login2" required></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><label for="password2">Password:</label></td>
+                        <td><input type="password" id="password2" name="password2" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="mail2">E-Mail:</label></td>
+                        <td><input type="text" id="mail2" name="mail2" required></td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit">submit</button>
+            </form>
+            <label id="overlayRegisterLabel"></label>
+        </div>
+    </div>
+    <div id="overlayAddAlbum" class="overlay3">
+        <div class="form-container">
+            <button class="close-btn" onclick="closeOverlayAddAlbum()">×</button>
+            <h2>Create a new album:</h2>
+            <form id="loginForm3">
+                <label>Name the album:</label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <label>Make a description for it:</label>
+                <br>
+                <textarea id="desc" class="desc" name="desc" rows="4" cols="40" required></textarea>
+                <br>
+                <button type="submit">submit</button>
+            </form>
+            <label id="overlayAddAlbumLabel"></label>
+        </div>
+    </div>
+    <div id="overlayImage">
+        <div class="modal-content">
+            <div id="topBar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+                <button id="imgBackButton" class="imgBackButton" onclick="imageBack()">×</button>
+                
+                <a id="imageLink" href="#" onclick="openImagePage()" style="flex-grow: 1; text-align: left;">
+                    <label style="font-weight: bold;">Image: </label>
+                    <label id="imageName" style="cursor: pointer; color: blue; text-decoration: underline; font-weight: bold;">image</label>
+                </a>
+            </div>
+            <div id="imageContainer" style="display: flex; justify-content: center; align-items: center; height: 70%;">
+                <img id="displayImage" src="imgClient/defImage.png" alt="Image" style="max-width: 70%; max-height: 70%;">
+            </div>
+            <div id="likesContainer" style="display: flex; align-items: right;">
+                <label>Likes:</label>
+                <label id="curLikes" style="margin: 0 10px;">-</label>
+                <div onclick="likePlus()">
+                    <img src="imgClient/likeEmpPlus.png" alt="Like Plus" style="width: 25px; height: 25px;">
+                </div>
+                <div onclick="likeMinus()">
+                    <img src="imgClient/likeEmpMinus.png" alt="Like Minus" style="width: 25px; height: 25px;">
+                </div>
+            </div>
+            <div id="commentSection" style="padding: 10px;">
+                <label for="commentInput">Your comment:</label>
+                <br>
+                <textarea id="commentInput" rows="4" cols="50"></textarea>
+                <br>
+                <button id="submitCommentButton" onclick="submitComment()">send</button>            
+            </div>
+            <label  style="font-weight: bold">Comments:</label>
+            <div id="allCommentSection"></div>
+        </div>
+    </div>    
+    <div id="overlayAlbum">
+        <div id="albumImages" class="albumImages" ></div>
+    </div>
+    <div id="overlayAddImage" class="overlay4">
+        <div id="addImagePart" class="addImagePart">
+            <button class="close-btn" onclick="closeOverlayAddImage()">×</button>
+            <h2>Upload image:</h2>
+            <form id="imageUploadForm" enctype="multipart/form-data">                
+                <div class="file-drop-area">
+                    <label for="fileInput">Click here to select the file<br>or<br>drag&drop file here</label>
+                    <input type="file" id="fileInput" name="image" accept="image/*" required>
+                </div>
+                <br>
+                <label for="imageName">Input your name for this file (or leave it default):</label>
+                <input type="text" id="imageName" name="imageName" required>
+                <br>
+                <button type="submit">Upload Image</button>
+            </form>
+            <label id="uploadStatusLabel"></label>
+        </div>
+    </div>
+      
+</body>
